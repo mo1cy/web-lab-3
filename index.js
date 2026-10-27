@@ -106,4 +106,40 @@ program
     });
   });
 
+// Команда 4: Матчі турніру з фільтрацією (варіант 4)
+program
+  .command('matches')
+  .description('Показати зіграні матчі з відбором за командою та/або датою')
+  .option('-t, --team <name>', 'відібрати матчі за участю вказаної команди')
+  .option('-d, --date <date>', 'відібрати матчі за конкретну дату (РРРР-ММ-ДД)')
+  .action((options) => {
+    const globalOptions = program.opts();
+    const data = readData(globalOptions.file);
+
+    let filteredMatches = data.matches;
+
+    // Фільтрація за командою (і для господарів і для гостей)
+    if (options.team) {
+      const searchTeam = options.team.toLowerCase();
+      filteredMatches = filteredMatches.filter(
+        m => m.home_team.toLowerCase() === searchTeam || m.away_team.toLowerCase() === searchTeam
+      );
+    }
+
+    // Фільтрація за датою
+    if (options.date) {
+      filteredMatches = filteredMatches.filter(m => m.date === options.date);
+    }
+
+    if (filteredMatches.length === 0) {
+      console.log('Матчів за вказаними критеріями не знайдено.');
+      return;
+    }
+
+    console.log(`--- Знайдено матчів: ${filteredMatches.length} ---`);
+    filteredMatches.forEach((match, index) => {
+      console.log(`${index + 1}. [${match.date}] ${match.home_team} ${match.score} ${match.away_team}`);
+    });
+  });
+
 program.parse(process.argv);
