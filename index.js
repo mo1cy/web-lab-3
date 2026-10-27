@@ -142,4 +142,40 @@ program
     });
   });
 
+// Команда 5: Список бомбардирів турніру (Специфічна для варіанта 4)
+program
+  .command('scorers')
+  .description('Показати список бомбардирів турніру за кількістю голів')
+  .action(() => {
+    const globalOptions = program.opts();
+    const data = readData(globalOptions.file);
+
+    const goalsCount = {};
+
+    // Проходимо по всіх матчах та їхніх подіях
+    data.matches.forEach(match => {
+      if (match.events) {
+        match.events.forEach(event => {
+          if (event.event_type.toLowerCase() === 'goal' || event.event_type === 'Goal') {
+            const player = event.primary_player;
+            goalsCount[player] = (goalsCount[player] || 0) + 1;
+          }
+        });
+      }
+    });
+
+    // Перетворюємо об'єкт у масив та сортуємо за спаданням голів
+    const sortedScorers = Object.entries(goalsCount).sort((a, b) => b[1] - a[1]);
+
+    if (sortedScorers.length === 0) {
+      console.log('У турнірі ще не забито жодного гола.');
+      return;
+    }
+
+    console.log('--- Список бомбардирів ---');
+    sortedScorers.forEach(([player, goals], index) => {
+      console.log(`${index + 1}. ${player} — ${goals} гол(ів)`);
+    });
+  });
+
 program.parse(process.argv);
