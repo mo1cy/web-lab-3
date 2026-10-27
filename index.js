@@ -77,4 +77,33 @@ program
     console.log(JSON.stringify(foundTeam, null, 2));
   });
 
+// Команда 3: Окреме поле
+program
+  .command('players <teamName>')
+  .description('Показати список гравців (вкладене поле) вказаної команди')
+  .action((teamName) => {
+    const globalOptions = program.opts();
+    const data = readData(globalOptions.file);
+
+    const foundTeam = data.teams.find(
+      t => t.team_name.toLowerCase() === teamName.toLowerCase()
+    );
+
+    if (!foundTeam) {
+      console.error(`Помилка: Команду з назвою "${teamName}" не знайдено.`);
+      process.exit(1);
+    }
+
+    // Обробка відсутнього поля або порожнього масиву
+    if (!foundTeam.players || foundTeam.players.length === 0) {
+      console.log(`У команди "${foundTeam.team_name}" немає заявлених гравців (поле порожнє або null).`);
+      return;
+    }
+
+    console.log(`--- Гравці команди "${foundTeam.team_name}" ---`);
+    foundTeam.players.forEach((player, index) => {
+      console.log(`${index + 1}. ${player.name} (№${player.number}, Позиція: ${player.position})`);
+    });
+  });
+
 program.parse(process.argv);
