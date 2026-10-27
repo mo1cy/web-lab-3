@@ -180,4 +180,19 @@ program
     });
   });
 
+// Додаткова команда, яка закриває вимогу "Окреме поле": Інформація про турнір
+// Це зроблено на випадок якshо не можна щоб одна команда реалізовувала зразу дві можливості одночасно, таким чином це теж загальна можливість наряду з командою players
+program
+  .command('info')
+  .description('Показати загальну інформацію про турнір')
+  .action(() => {
+    const globalOptions = program.opts();
+    const data = readData(globalOptions.file);
+
+    console.log('--- Інформація про турнір ---');
+    console.log(`Назва: ${data.tournament_name}`);
+    console.log(`Рік: ${data.year}`);
+    console.log(`Статус: ${data.is_active ? 'Триває' : 'Завершено'}`);
+  });
+
 program.parse(process.argv);
