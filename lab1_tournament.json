@@ -1,0 +1,102 @@
+{
+  "tournament_name": "Відбір на Євро-2020",
+  "year": 2019,
+  "is_active": false,
+  "teams": [
+    {
+      "team_name": "Україна",
+      "coach": "Андрій Шевченко",
+      "players": [
+        {
+          "name": "Андрій Ярмоленко",
+          "number": 7,
+          "position": "Forward"
+        },
+        {
+          "name": "Роман Яремчук",
+          "number": 9,
+          "position": "Forward"
+        },
+        {
+          "name": "Тарас Степаненко",
+          "number": 6,
+          "position": "Midfielder"
+        },
+        {
+          "name": "Віктор Коваленко",
+          "number": 20,
+          "position": "Midfielder"
+        }
+      ]
+    },
+    {
+      "team_name": "Португалія",
+      "coach": "Фернанду Сантуш",
+      "players": [
+        {
+          "name": "Кріштіану Роналду",
+          "number": 7,
+          "position": "Forward"
+        },
+        {
+          "name": "Бернарду Сілва",
+          "number": 10,
+          "position": "Midfielder"
+        },
+        {
+          "name": "Пепе",
+          "number": 3,
+          "position": "Defender"
+        }
+      ]
+    }
+  ],
+  "matches": [
+    {
+      "date": "2019-03-22",
+      "home_team": "Португалія",
+      "away_team": "Україна",
+      "score": "0:0",
+      "events": [
+        {
+          "event_minute": 87,
+          "event_type": "Substitution",
+          "primary_player": "Андрій Ярмоленко",
+          "player_in": "Віктор Коваленко"
+        }
+      ]
+    },
+    {
+      "date": "2019-10-14",
+      "home_team": "Україна",
+      "away_team": "Португалія",
+      "score": "2:1",
+      "events": [
+        {
+          "event_minute": 6,
+          "event_type": "Goal",
+          "primary_player": "Роман Яремчук",
+          "player_in": null
+        },
+        {
+          "event_minute": 27,
+          "event_type": "Goal",
+          "primary_player": "Андрій Ярмоленко",
+          "player_in": null
+        },
+        {
+          "event_minute": 72,
+          "event_type": "Goal",
+          "primary_player": "Кріштіану Роналду",
+          "player_in": null
+        },
+        {
+          "event_minute": 72,
+          "event_type": "Red Card",
+          "primary_player": "Тарас Степаненко",
+          "player_in": null
+        }
+      ]
+    }
+  ]
+}
