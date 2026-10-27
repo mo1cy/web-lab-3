@@ -142,17 +142,17 @@ program
     });
   });
 
-// Команда 5: Список бомбардирів турніру (Специфічна для варіанта 4)
+// Команда 5: Список бомбардирів турніру (з булевим прапорцем --reverse)
 program
   .command('scorers')
   .description('Показати список бомбардирів турніру за кількістю голів')
-  .action(() => {
+  .option('-r, --reverse', 'сортувати у зворотному порядку (від найменшої кількості голів)') // Булевий прапорець
+  .action((options) => {
     const globalOptions = program.opts();
     const data = readData(globalOptions.file);
 
     const goalsCount = {};
 
-    // Проходимо по всіх матчах та їхніх подіях
     data.matches.forEach(match => {
       if (match.events) {
         match.events.forEach(event => {
@@ -164,15 +164,17 @@ program
       }
     });
 
-    // Перетворюємо об'єкт у масив та сортуємо за спаданням голів
-    const sortedScorers = Object.entries(goalsCount).sort((a, b) => b[1] - a[1]);
+    // Сортування залежно від прапорця --reverse
+    const sortedScorers = Object.entries(goalsCount).sort((a, b) => {
+      return options.reverse ? a[1] - b[1] : b[1] - a[1];
+    });
 
     if (sortedScorers.length === 0) {
       console.log('У турнірі ще не забито жодного гола.');
       return;
     }
 
-    console.log('--- Список бомбардирів ---');
+    console.log(`--- Список бомбардирів ${options.reverse ? '(зворотний порядок)' : ''} ---`);
     sortedScorers.forEach(([player, goals], index) => {
       console.log(`${index + 1}. ${player} — ${goals} гол(ів)`);
     });
