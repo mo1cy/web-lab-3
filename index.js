@@ -55,4 +55,26 @@ program
     });
   });
 
+// Команда 2: Один елемент
+program
+  .command('team <name>')
+  .description('Показати повну інформацію про вказану команду')
+  .action((name) => {
+    const globalOptions = program.opts();
+    const data = readData(globalOptions.file);
+
+    // Шукаємо команду без урахування регістру
+    const foundTeam = data.teams.find(
+      t => t.team_name.toLowerCase() === name.toLowerCase()
+    );
+
+    if (!foundTeam) {
+      console.error(`Помилка: Команду з назвою "${name}" не знайдено.`);
+      process.exit(1);
+    }
+
+    console.log(`--- Інформація про команду "${foundTeam.team_name}" ---`);
+    console.log(JSON.stringify(foundTeam, null, 2));
+  });
+
 program.parse(process.argv);
